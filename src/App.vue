@@ -1,28 +1,50 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <table border="1px">
+        <tr>
+          <th>Name</th>
+          <th>Climate</th>
+          <th>Created</th>
+          <th>Diameter</th>
+          <th>Edited</th>
+          <th>Films</th>
+          <th>Gravity</th>
+          <th>Population</th>
+        </tr>
+        <tr v-for="planet in planets" :key="planet">
+          <td>{{ planet.name }}</td>
+          <td>{{ planet.climate }}</td>
+          <td>{{ planet.created }}</td>
+          <td>{{ planet.diameter }}</td>
+          <td>{{ planet.edited }}</td>
+          <td>{{ planet.films }}</td>
+          <td>{{ planet.gravity }}</td>
+          <td>{{ planet.population }}</td>
+        </tr>
+      </table>
+
+      <p></p>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from "axios";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      planets: [],
+      results: [],
+    };
+  },
+  mounted() {
+    axios.get("https://swapi.dev/api/planets").then((response) => {
+      this.planets = response.data.results;
+      console.log(this.planets);
+    });
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
